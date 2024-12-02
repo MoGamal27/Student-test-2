@@ -184,7 +184,7 @@ export default function Login() {
                     </span>
                 </p>
                 <p>Forget Password ? <button onClick={()=> navigate('/reset')} className='text-primary underline cursor-pointer ml-1 hover:text-primary/80'>Click here</button></p>
-                <a target='_blank' href='http://localhost:5176/'>
+                <a target='_blank' href='https://student-test-2-s83v.vercel.app'>
               <li className='py-1 text-primary underline cursor-pointer ml-1 hover:text-primary/80'>Teacher Login</li>
                 </a>
             </div>
