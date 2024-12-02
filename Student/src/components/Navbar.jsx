@@ -87,7 +87,7 @@ export default function Navbar() {
                                     {t('My Profile')}
                                 </p>
                                 <p onClick={handleLogout} className='hover:text-black cursor-pointer'>
-                                    {t('Logout')}
+                            {t('Logout')}
                                 </p>
                             </div>
                         </div>
@@ -98,11 +98,6 @@ export default function Navbar() {
                          <div>
                         <button   onClick={() => navigate('/login')} className='font-semibold text-black px-2 py-1 hover:bg-sky-800 hover:text-white rounded-full hidden md:block'>Sign in</button>
                         </div>
-                      {/*  <button 
-                        onClick={() => navigate('/login')} 
-                        className='font-semibold text-black px-2 py-1 hover:bg-sky-800 hover:text-white rounded-full hidden md:block'>
-                        Create account
-                         </button> */} 
                     </div>
                     
                 )}
@@ -114,6 +109,7 @@ export default function Navbar() {
                     alt="" 
                 />
                 
+
                 <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}>
                     <div className='flex items-center justify-end px-5 py-6'>
                         <img 
@@ -133,18 +129,13 @@ export default function Navbar() {
                         <NavLink onClick={() => setShowMenu(false)} to={'/contact'}>
                             <p className='px-4 py-2 rounded inline-block'>{t('Contact')}</p>
                         </NavLink>
-
-                      {/*  <a target='_blank' href='http://localhost:5174/'>
-                            <li className='py-1 border text-xs border-primary p-1 rounded-full'>Admin Panel</li>
-                    </a> */}
-
-                      {/* <NavLink onClick={() => setShowMenu(false)} to={'/Login'}>
-                       <p className='px-4 py-2 rounded inline-block'>Create account</p>
-                       </NavLink>*/}
+                        <div className='flex'>
+                        <button  onClick={() => navigate('/login')} ><NavLink onClick={() => setShowMenu(false)}  className='font-semibold text-black px-2 py-1 ml-3 hover:bg-sky-800 hover:text-white rounded-full  md:block'>Sign in</NavLink></button>
+                        </div>
                         <LanguageSwitcher/>
                     </ul>
                 </div>
             </div>
         </div>
     );
-}
+};
