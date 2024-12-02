@@ -32,7 +32,7 @@ export default function App() {
         <Route path='/my-appointment' element={<MyApponint />} />
         <Route path='/appointment/:teacherId' element={<Apponint />} />    
         <Route path='/reset' element={<Reset />} />    
-        <Route path='/newpassword' element={<NewPassword />} />    
+        <Route path='/newpassword/:userId/:token' element={<NewPassword />} />    
       </Routes>
       </UserContextProvider>
       <Footer />
