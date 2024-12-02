@@ -40,8 +40,8 @@ export default function TopTeacher() {
             <h1 className='text-3xl font-medium'>Get to Know Our Teachers</h1>
             <div className="w-full pt-5 px-3 sm:px-0">
       <Slider {...settings}>
-        {teachers.slice(0, 5).map((item, index) => (
-          <div cla
+        {teachers.slice(0, 4).map((item, index) => (
+          <div 
             onClick={() => navigate(`/appointment/${item.id}`)} // Ensure the correct ID is used
             className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
             key={index}
