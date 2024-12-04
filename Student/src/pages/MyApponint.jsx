@@ -173,12 +173,12 @@ export default function MyAppointment() {
       {showPayPal && (
         
         <PayPalScriptProvider options={{ "client-id": "AfhUouOs3xx6CHsWXPhX1K9dUfk0231k2U-8Nra2NkkTRdBdyIkOZVHkbnqEf-E54oMjXlfHTBe8Ddl6" }}>
-          <div className="paypal-container mt-6">
-        <div className="container mx-auto">
+        <div className="paypal-container ">
+        <div className="container pb-3 mx-auto">
          {/* Button to toggle text visibility */}
          <button
         onClick={toggleText}
-        className="bg-blue-500 text-white py-2 px-4 w-full rounded-md mb-4 hover:bg-blue-700 transition duration-300"
+        className="bg-blue-500  text-white py-2 px-4 w-full rounded-md  hover:bg-blue-700 transition duration-300"
       >
         {isTextVisible ? 'Close' : 'Pay with Paybox'}
       </button>
@@ -215,7 +215,7 @@ export default function MyAppointment() {
       }}
      
     />
-  </div>
+      </div>
         </PayPalScriptProvider>
       )}
     </div>
