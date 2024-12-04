@@ -5,6 +5,7 @@ import { AppContext } from '../context/AppContext';
 import { useTranslation } from 'react-i18next';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { UserContext } from '../context/UserContext';
+import { toast } from 'react-toastify';
 
 export default function MyAppointment() {
   const { teachers } = useContext(AppContext);
@@ -60,17 +61,26 @@ export default function MyAppointment() {
 
   const handleCancelAppointment = async (bookingId) => {
     try {
-      await axios.delete(`https://booking-lessons-production.up.railway.app/api/bookings/${bookingId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      setBookings(bookings.filter(booking => booking.id !== bookingId));
-    } catch (err) {
-      console.error('Error cancelling appointment:', err);
-      alert('Failed to cancel appointment. Please try again.');
+      const response = await axios.delete(
+        `https://booking-lessons-production.up.railway.app/api/bookings/${bookingId}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+  
+      if (response.data.success) {
+        toast.success('Appointment cancelled successfully');
+        setBookings(bookings.filter(booking => booking.id !== bookingId));
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to cancel appointment');
+      // Refresh the bookings list to ensure sync with server
+      fetchBookings();
     }
   };
+  
 
   const makePayment = (booking) => {
     setCurrentBooking(booking);
@@ -116,15 +126,15 @@ export default function MyAppointment() {
                   src={teacher?.image} 
                   alt={teacher?.name} 
                 />
-                <div className='text-sm pt-2  border-b text-zinc-600'>
-                  <p className='text-neutral-800 pb-2 font-medium'>{teacher?.name}</p>
+                <div className='text-sm text-zinc-600'>
+                  <p className='text-neutral-800 font-medium'>{teacher?.name}</p>
                   <p className="text-sm font-medium rounded-md">Total Fees: ${totalFees}</p>
                   
                   {/* Display all booking times */}
-                  <div className='mt-2 flex border-b justify-between font-semibold'>
+                  <div className='mt-2'>
                     <p className='font-medium'>Booking Times:</p>
                     {bookings.map((booking, index) => (
-                      <p key={index} className='mt-1 font-semibold'>
+                      <p key={index} className='text-xs mt-1'>
                         {booking.slotDate} / {booking.slotTime}
                       </p>
                     ))}
@@ -212,5 +222,3 @@ export default function MyAppointment() {
   </section>
 );
 }
-
-  

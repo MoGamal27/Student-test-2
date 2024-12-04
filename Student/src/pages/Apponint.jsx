@@ -24,6 +24,9 @@ export default function Appointment() {
   const [isReadMore, setIsReadMore] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 const [selectedDates, setSelectedDates] = useState([]);
+const [activeTab, setActiveTab] = useState('about');
+const [isAboutExpanded, setIsAboutExpanded] = useState(false);
+const [isCourseExpanded, setIsCourseExpanded] = useState(false);
 
 
 
@@ -79,7 +82,14 @@ const handleDateSelect = (day) => {
   if (day) {
     const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
     setSelectedDate(newDate);
-    // This will keep existing selections for other dates
+    
+    // Add selected date to selectedDates array if not already present
+    const dateString = newDate.toISOString().split('T')[0];
+    if (!selectedDates.includes(dateString)) {
+      setSelectedDates([...selectedDates, dateString]);
+    }
+    
+    // Fetch available time slots for the selected date
     fetchAvailableTimeSlots(newDate);
   }
 };
@@ -139,12 +149,24 @@ const bookAppointment = async () => {
     return;
   }
 
+  // Check for token first
+  if (!token) {
+    toast.warn('Please login to book an appointment');
+    setTimeout(() => {
+      navigate('/login');
+    }, 2000); // Give time for the toast to be visible
+    return;
+  }
+
   const decodedToken = jwtDecode(token);
   const studentId = decodedToken.id ? parseInt(decodedToken.id, 10) : null;
 
   if (!decodedToken || !studentId) {
     toast.warn('Please login to book an appointment');
-    return navigate('login');
+    setTimeout(() => {
+      navigate('/login');
+    }, 2000);
+    return;
   }
 
   try {
@@ -210,7 +232,7 @@ const calculateTotalAppointments = () => {
 
 
   return (
-  <div className="mx-auto w-full p-4">    
+   <div className="mx-auto w-full p-4">   
   <div className=" flex-col md:flex-row gap-6 mb-8 w-full">
   <div className="bg-sky-200 p-6 rounded-lg shadow flex flex-col md:flex-row gap-4">
     {/* Teacher Image Section */}
@@ -245,9 +267,9 @@ const calculateTotalAppointments = () => {
     {/* Speaks Info Section */}
     <div className="grid grid-cols-1 sm:grid-cols-[1fr_3fr_3fr] md:grid-cols-[1fr_2fr_2fr] lg:grid-cols-[1fr_2fr_5fr] gap-y-2.5 mt-3 text-neutral-700">
   <p className="font-medium text-gray-500">Speaks</p>
-  <p className="text-black sm:ml-3   font-semibold flex">
+  <p className="text-black sm:ml-3  font-semibold flex">
     {teacherInfo.speaks}
-<h2 className="ml-3 border font-semibold bg-green-100 rounded-lg text-sm text-green-600 pl-1 pr-1">
+<h2 className="ml-3 border bg-green-100 rounded-lg text-sm text-green-600 pl-1 pr-1">
       {teacherInfo.levelSpeak}
     </h2>
   </p>
@@ -267,31 +289,67 @@ const calculateTotalAppointments = () => {
 
 
 
-    <div className="grid grid-cols-1 md:grid-cols-[1fr_5fr]  mt-3 text-neutral-700">
-      <p className="font-medium text-black">About Me</p>
-      <p className="text-black font-semibold">About Course: {teacherInfo.courseDescription}</p>
-    </div>
+<div className="flex flex-col gap-4 mt-3">
+  {/* About Me Button */}
+  <button 
+    onClick={() => setActiveTab('about')} 
+    className={`p-4 rounded-lg transition-all duration-300 text-left w-full
+      ${activeTab === 'about' 
+        ? 'bg-blue-100 shadow-md' 
+        : 'bg-white hover:bg-gray-50'}`}
+  >
+    <h3 className="font-medium text-black mb-2">About Me</h3>
+    <div className="relative">
+      <p className={`text-black font-semibold ${!isAboutExpanded ? 'line-clamp-3' : ''}`}>
+        {teacherInfo.bio}
+      </p>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsAboutExpanded(!isAboutExpanded);
+        }}
+        className="text-blue-500 hover:text-blue-700 font-medium mt-2"
+      >
+        {isAboutExpanded ? 'Read Less' : 'Read More'}
+      </button>
+    </div>
+  </button>
+
+  {/* About Course Button */}
+  <button 
+    onClick={() => setActiveTab('course')}
+    className={`p-4 rounded-lg transition-all duration-300 text-left w-full
+      ${activeTab === 'course' 
+        ? 'bg-blue-100 shadow-md' 
+        : 'bg-white hover:bg-gray-50'}`}
+  >
+    <h3 className="font-medium text-black mb-2">About Course</h3>
+    <div className="relative">
+      <p className={`text-black font-semibold ${!isCourseExpanded ? 'line-clamp-3' : ''}`}>
+        {teacherInfo.courseDescription}
+      </p>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsCourseExpanded(!isCourseExpanded);
+        }}
+        className="text-blue-500 hover:text-blue-700 font-medium mt-2"
+      >
+        {isCourseExpanded ? 'Read Less' : 'Read More'}
+      </button>
+    </div>
+  </button>
+</div>
+
+
+
+
     <div className="pt-2">
      <p>{teacherInfo.location}</p>
     </div>
 
 
-      {/* Read More Section */}
-    <div className="pt-2  max-w-3xl">
-      <div className="relative">
-        <p
-          className={`text-gray-600 mb-4 text-base sm:text-lg lg:text-xl ${isReadMore ? "" : "line-clamp-3"}`}
-        >
-          {teacherInfo.bio}
-        </p>
-        <button
-          onClick={toggleReadMore}
-          className="text-blue-500 hover:text-blue-700 font-semibold mt-2"
-        >
-          {isReadMore ? "Read Less" : "Read More"}
-        </button>
-      </div>
-    </div>
+   
     </div>
 
 
@@ -306,14 +364,14 @@ const calculateTotalAppointments = () => {
         autoPlay
         loop
         muted
-        className=" w-full flex mx-auto md:w-96"
+        className="w-full flex mx-auto md:w-96"
       ></video>
     </div>
     <p className="text-lg border bg-blue-400 rounded-md border-blue-300 text-center font-semibold">Fee: ${teacherInfo.fees}/hour</p>
      
 
 
-    <div className="w-full flex mx-auto lg:w-96 pt-2">
+    <div className="container mx-auto pt-2">
       <button
         onClick={() => setIsCalendarOpen(!isCalendarOpen)}
         className="bg-sky-400 text-black font-semibold py-2 px-4 w-full rounded-lg mb-6 hover:bg-blue-700 hover:text-white transition duration-300"
@@ -354,15 +412,16 @@ const calculateTotalAppointments = () => {
                 {day}
               </div>
             ))}
-            {getDaysInMonth(currentDate).map((day, index) => (
+           {getDaysInMonth(currentDate).map((day, index) => (
   <div
     key={index}
     onClick={() => day && handleDateSelect(day)}
     className={`
       text-center p-2 rounded-lg cursor-pointer justify-center items-center flex transition duration-300
+      ${!day ? 'invisible' : ''}
       ${day ? 'hover:bg-blue-500 hover:text-white' : ''}
       ${selectedDates.includes(
-        new Date(currentDate.getFullYear(), currentDate.getMonth(), day).toISOString().split('T')[0]
+        new Date(currentDate.getFullYear(), currentDate.getMonth(), day)?.toISOString().split('T')[0]
       ) ? 'bg-blue-500 text-white' : day ? 'bg-gray-100' : ''}
     `}
   >
@@ -428,5 +487,4 @@ const calculateTotalAppointments = () => {
    </div>
   );
 }
-
 

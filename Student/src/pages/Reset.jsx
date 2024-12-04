@@ -1,29 +1,54 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 export default function Reset() {
+  const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  return <>
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    
+    try {
+      const response = await axios.post('https://booking-lessons-production.up.railway.app/api/password-reset/reset-password', { email })
+      alert('Password reset link sent to your email')
+      toast.success('Password reset link sent to your email')
+      setEmail('')
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Something went wrong')
+    } finally {
+      setLoading(false)
+    }
+  }
 
-<form className='container  pt-28 pb-64 '>
-    <div class="w-96 mx-auto">
-      <h1 className='block mb-2  font-medium text-2xl text-sky-700 dark:text-sky-700'>Account recovery</h1>
-    <div className="relative mx-auto z-0 mb-5 group">
-      <input
-        type="password"
-        name="password"
-        id="password"
-        className="block py-2.5 px-0 w-full sm:w-96 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-sky-500 focus:outline-none focus:ring-0 focus:border-sky-600 peer"
-        placeholder=" "
-      />
-      <label htmlFor="password"className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-sky-600 peer-focus:dark:text-sky-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Enter New Password:</label>
-    </div>
-    <div className='pt-2'>
-    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-    </div>
-    </div>
-</form>
-
-  
-  
-  </>
+  return (
+    <form onSubmit={handleSubmit} className='container pt-16 pb-48'>
+      <div className="w-96 mx-auto">
+        <div className="">
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+            Confirm Email
+          </label>
+          <input 
+            type="email" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+            placeholder="Enter your email" 
+            required 
+          />
+        </div>
+        <div className='pt-2'>
+          <button 
+            type="submit"
+            disabled={loading}
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            {loading ? 'Sending...' : 'Submit'}
+          </button>
+        </div>
+      </div>
+    </form>
+  )
 }
+

@@ -49,7 +49,7 @@ const UserContextProvider = ({ children }) => {
     const PayWithPoints = async (bookingId, studentId) => {
         try {
           const response = await axios.post(
-            'http://localhost:3000/api/payment/pay-with-points',
+            'https://booking-lessons-production.up.railway.app/api/payment/pay-with-points',
             {
               bookingId,
               studentId,
