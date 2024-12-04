@@ -27,8 +27,8 @@ export default function Header() {
                 <h3>{t('Book')}</h3> <img className='w-3' src={arrow} alt="" />
             </NavLink>
         </div>
-        <div className='md:w-1/2 sm:top-24 relative'>
-        <video  width={800} height={400} src={videos} controls autoPlay loop muted></video>     
+      <div className='md:w-1/2  sm:top-24 relative'>
+        <video className='rounded-lg' width={800} height={400} src={videos} controls autoPlay loop muted></video>     
         </div>
     </div>
  </section>
