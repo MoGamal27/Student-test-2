@@ -24,6 +24,9 @@ export default function Appointment() {
   const [isReadMore, setIsReadMore] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 const [selectedDates, setSelectedDates] = useState([]);
+const [activeTab, setActiveTab] = useState('about');
+const [isAboutExpanded, setIsAboutExpanded] = useState(false);
+const [isCourseExpanded, setIsCourseExpanded] = useState(false);
 
 
 
@@ -229,11 +232,11 @@ const calculateTotalAppointments = () => {
 
 
   return (
-  <div className="container p-4">    
+   <div className="mx-auto w-full p-4">   
   <div className=" flex-col md:flex-row gap-6 mb-8 w-full">
   <div className="bg-sky-200 p-6 rounded-lg shadow flex flex-col md:flex-row gap-4">
     {/* Teacher Image Section */}
-    <div className="flex-col bg-white p-4 rounded-md md:flex-row items-center">
+    <div className="flex-col w-full bg-white p-4 rounded-md md:flex-row items-center">
     <div className="flex flex-col sm:flex-row p-4">
   {/* Image Section */}
   <img
@@ -286,31 +289,67 @@ const calculateTotalAppointments = () => {
 
 
 
-    <div className="grid grid-cols-1 md:grid-cols-[1fr_5fr]  mt-3 text-neutral-700">
-      <p className="font-medium text-black">About Me</p>
-      <p className="text-black font-semibold">About Course: {teacherInfo.courseDescription}</p>
-    </div>
+<div className="flex flex-col gap-4 mt-3">
+  {/* About Me Button */}
+  <button 
+    onClick={() => setActiveTab('about')} 
+    className={`p-4 rounded-lg transition-all duration-300 text-left w-full
+      ${activeTab === 'about' 
+        ? 'bg-blue-100 shadow-md' 
+        : 'bg-white hover:bg-gray-50'}`}
+  >
+    <h3 className="font-medium text-black mb-2">About Me</h3>
+    <div className="relative">
+      <p className={`text-black font-semibold ${!isAboutExpanded ? 'line-clamp-3' : ''}`}>
+        {teacherInfo.bio}
+      </p>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsAboutExpanded(!isAboutExpanded);
+        }}
+        className="text-blue-500 hover:text-blue-700 font-medium mt-2"
+      >
+        {isAboutExpanded ? 'Read Less' : 'Read More'}
+      </button>
+    </div>
+  </button>
+
+  {/* About Course Button */}
+  <button 
+    onClick={() => setActiveTab('course')}
+    className={`p-4 rounded-lg transition-all duration-300 text-left w-full
+      ${activeTab === 'course' 
+        ? 'bg-blue-100 shadow-md' 
+        : 'bg-white hover:bg-gray-50'}`}
+  >
+    <h3 className="font-medium text-black mb-2">About Course</h3>
+    <div className="relative">
+      <p className={`text-black font-semibold ${!isCourseExpanded ? 'line-clamp-3' : ''}`}>
+        {teacherInfo.courseDescription}
+      </p>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsCourseExpanded(!isCourseExpanded);
+        }}
+        className="text-blue-500 hover:text-blue-700 font-medium mt-2"
+      >
+        {isCourseExpanded ? 'Read Less' : 'Read More'}
+      </button>
+    </div>
+  </button>
+</div>
+
+
+
+
     <div className="pt-2">
      <p>{teacherInfo.location}</p>
     </div>
 
 
-      {/* Read More Section */}
-    <div className="pt-2  max-w-3xl">
-      <div className="relative">
-        <p
-          className={`text-gray-600 mb-4 text-base sm:text-lg lg:text-xl ${isReadMore ? "" : "line-clamp-3"}`}
-        >
-          {teacherInfo.bio}
-        </p>
-        <button
-          onClick={toggleReadMore}
-          className="text-blue-500 hover:text-blue-700 font-semibold mt-2"
-        >
-          {isReadMore ? "Read Less" : "Read More"}
-        </button>
-      </div>
-    </div>
+   
     </div>
 
 

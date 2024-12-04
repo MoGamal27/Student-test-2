@@ -16,7 +16,7 @@ export default function Footer() {
     <div className="md:flex md:justify-between">
       <div className="mb-6 md:mb-0">
         <div className="flex items-center">
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-black">{t('Arabe')}</span>
+          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-black">{t('Yalla')}</span>
         </div>
         <div className="flex pt-4 gap-2">
             <NavLink to={'https://wa.me/972502926398'}>
@@ -80,7 +80,7 @@ export default function Footer() {
     </div>
 
     <hr />
-    <p className='text-center pt-2'>© Copyright 2023 by Arabe</p>
+    <p className='text-center pt-2'>© Copyright 2023 by Yalla</p>
   </div>
 </footer>
 

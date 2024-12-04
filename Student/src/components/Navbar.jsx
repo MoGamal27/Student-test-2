@@ -55,7 +55,7 @@ export default function Navbar() {
         <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400'>
             <NavLink to={'/'}>
                 <div>
-                <h2 className='cursor-pointer justify-center items-center flex font-semibold text-2xl'><img className='w-12 flex' src={yalla} alt="" /> {t('Arabe')}</h2>
+                <h2 className='cursor-pointer justify-center items-center flex font-semibold text-2xl'><img className='w-12 flex' src={yalla} alt="" /> {t('Yalla')}</h2>
                 </div>
             </NavLink>
             

@@ -9,7 +9,8 @@ export default function Login() {
         name: '',
         email: '',
         phone: '',
-        password: ''
+        password: '',
+        confirmPassword: ''
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
@@ -39,6 +40,11 @@ export default function Login() {
             newErrors.password = 'Password is required';
         } else if (formData.password.length < 6) {
             newErrors.password = 'Password must be at least 6 characters';
+        }
+        if(state === 'Sign Up' && !formData.confirmPassword) {
+            newErrors.confirmPassword = 'Confirm Password is required';
+        } else if (formData.password !== formData.confirmPassword) {
+            newErrors.confirmPassword = 'Passwords do not match';
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -82,6 +88,7 @@ export default function Login() {
                 localStorage.setItem('user', JSON.stringify(response.data.user));
             }
             navigate('/');
+            alert('Congratulations!! 🎉🎉🎉🎉 We’re excited to let you know that you’ve earned 10 points! With these points, you can book your first lesson with any teacher of your choice. The lesson will be 25 minutes long. Please make sure to book a time that suits you within this week to take your first lesson! Keep in mind that the first lesson is 25 minutes long, and the booking cannot be changed or canceled.')
         } catch (error) {
             const errorMessage = error.response?.data?.message || 
                 'An error occurred. Please try again.';
@@ -93,7 +100,7 @@ export default function Login() {
 
     const toggleState = () => {
         setState(prev => prev === 'Sign Up' ? 'Login' : 'Sign Up');
-        setFormData({ name: '', email: '', phone: '' ,password: '' });
+        setFormData({ name: '', email: '', phone: '' ,password: '', confirmPassword: '' });
         setErrors({});
         setApiError('');
     };
@@ -156,6 +163,21 @@ export default function Login() {
                     />
                     {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                 </div>
+                
+                {state === 'Sign Up' && (
+                    <div className='w-full pt-1'>
+                        <p className='font-semibold'>{t('confirmPassword')}</p>
+                        <input
+                            name="confirmPassword"
+                            className='block py-2.5 px-0 w-full sm:w-96 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-sky-500 focus:outline-none focus:ring-0 focus:border-sky-600 peer'
+                            type="password"
+                            onChange={handleInputChange}
+                            value={formData.confirmPassword}
+                        />
+                        {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+                    </div>
+                )}
+             
 
                 <button 
                     className={`bg-primary text-white w-full py-2 rounded-md text-base 
