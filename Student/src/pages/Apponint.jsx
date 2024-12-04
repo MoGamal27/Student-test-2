@@ -265,11 +265,11 @@ const calculateTotalAppointments = () => {
 
 
     {/* Speaks Info Section */}
-    <div className="grid grid-cols-1 sm:grid-cols-[1fr_3fr_3fr] md:grid-cols-[1fr_2fr_2fr] lg:grid-cols-[1fr_2fr_5fr] gap-y-2.5 mt-3 text-neutral-700">
+    <div className="grid grid-cols-1 sm:grid-cols-[1fr_3fr_3fr] gap-y-2.5 mt-3 text-neutral-700">
   <p className="font-medium text-gray-500">Speaks</p>
   <p className="text-black sm:ml-3  font-semibold flex">
     {teacherInfo.speaks}
-<h2 className="ml-3 border bg-green-100 rounded-lg text-sm text-green-600 pl-1 pr-1">
+<h2 className="ml-4 border bg-green-100 rounded-lg text-sm text-green-600 pl-1 pr-1">
       {teacherInfo.levelSpeak}
     </h2>
   </p>
