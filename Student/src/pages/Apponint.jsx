@@ -354,7 +354,7 @@ const calculateTotalAppointments = () => {
 
 
   {/* Video Section */}
-    <div className="flex-col md:h-96 bg-white rounded-md p-4 md:flex-row gap-6">
+    <div className="flex-col md:h-full bg-white rounded-md p-4 md:flex-row gap-6">
     <div className="sm:py-5 md:flex-col">
       <video
         width={800}
@@ -364,7 +364,7 @@ const calculateTotalAppointments = () => {
         autoPlay
         loop
         muted
-        className="w-full flex mx-auto md:w-96"
+        className="flex mx-auto md:min-w-full"
       ></video>
     </div>
      <div className='flex justify-between'>
@@ -388,7 +388,7 @@ const calculateTotalAppointments = () => {
 
     {/* Calendar */}
   {isCalendarOpen && (
-        <div className="bg-white pl-2 pr-2 rounded-lg shadow-lg w-full md:w-96 mx-auto transition-all duration-300">
+        <div className="bg-white  md:w-[45%] pl-2 pr-2 rounded-lg shadow-lg w-full md:w-96 mx-auto transition-all duration-300">
           <div className="flex pt-2 justify-between items-center mb-4">
             <button
               onClick={() => changeMonth(-1)}
