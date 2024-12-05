@@ -41,6 +41,9 @@ export default function Login() {
         } else if (formData.password.length < 6) {
             newErrors.password = 'Password must be at least 6 characters';
         }
+        if (state === 'Sign Up' && formData.password !== formData.confirmPassword) {
+            newErrors.confirmPassword = 'Passwords do not match';
+        }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -83,8 +86,9 @@ export default function Login() {
                 localStorage.setItem('user', JSON.stringify(response.data.user));
             }
             navigate('/');
-            alert('Congratulations!! 🎉🎉🎉🎉 We’re excited to let you know that you’ve earned 10 points! With these points, you can book your first lesson with any teacher of your choice. The lesson will be 25 minutes long. Please make sure to book a time that suits you within this week to take your first lesson! Keep in mind that the first lesson is 25 minutes long, and the booking cannot be changed or canceled.')
-        } catch (error) {
+            if (state === 'Sign Up') {
+                alert('Congratulations!! 🎉🎉🎉🎉 We’re excited to let you know that you’ve earned 10 points! With these points, you can book your first lesson with any teacher of your choice. The lesson will be 25 minutes long. Please make sure to book a time that suits you within this week to take your first lesson! Keep in mind that the first lesson is 25 minutes long, and the booking cannot be changed or canceled.');
+            }
             const errorMessage = error.response?.data?.message || 
                 'An error occurred. Please try again.';
             setApiError(errorMessage);
