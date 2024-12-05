@@ -16,6 +16,9 @@ export default function Footer() {
     <div className="md:flex md:justify-between">
       <div className="mb-6 md:mb-0">
         <div className="flex items-center">
+          <div>
+            <h2 className='cursor-pointer justify-center items-center flex font-semibold text-2xl'><img className='w-12 flex' src={yalla} alt="" /></h2>
+          </div>
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-black">{t('Yalla')}</span>
         </div>
         <div className="flex pt-4 gap-2">
