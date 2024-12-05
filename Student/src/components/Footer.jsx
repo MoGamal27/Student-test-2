@@ -4,6 +4,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { RiFacebookCircleLine } from "react-icons/ri";
 import { FaInstagram } from "react-icons/fa6";
 import { useTranslation } from 'react-i18next';
+import yalla from '/src/assets/assets_frontend/2yalla.png'
 
 
 export default function Footer() {
