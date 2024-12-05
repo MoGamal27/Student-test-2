@@ -278,7 +278,7 @@ const calculateTotalAppointments = () => {
 
 
     {/* Certificate Section */}
-    <div className="grid grid-cols-1 sm:grid-cols-[1fr_5fr] gap-y-2.5 mt-3 text-neutral-700">
+    <div className="grid grid-cols-1 sm:grid-cols-[1fr_6fr] gap-y-2.5 mt-3 text-neutral-700">
       <p className="font-medium text-gray-500">Certificate</p>
       <p className="text-black flex">
        {teacherInfo.degree}
@@ -299,7 +299,7 @@ const calculateTotalAppointments = () => {
         : 'bg-white hover:bg-gray-50'}`}
   >
     <h3 className="font-medium text-black mb-2">About Me</h3>
-    <div className="relative">
+    <div className="relative opacity-90 hover:opacity-100">
       <p className={`text-black font-semibold ${!isAboutExpanded ? 'line-clamp-3' : ''}`}>
         {teacherInfo.bio}
       </p>
@@ -324,7 +324,7 @@ const calculateTotalAppointments = () => {
         : 'bg-white hover:bg-gray-50'}`}
   >
     <h3 className="font-medium text-black mb-2">About Course</h3>
-    <div className="relative">
+    <div className="relative opacity-90 hover:opacity-100">
       <p className={`text-black font-semibold ${!isCourseExpanded ? 'line-clamp-3' : ''}`}>
         {teacherInfo.courseDescription}
       </p>
