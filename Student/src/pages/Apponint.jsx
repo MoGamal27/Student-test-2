@@ -367,8 +367,10 @@ const calculateTotalAppointments = () => {
         className="w-full flex mx-auto md:w-96"
       ></video>
     </div>
-    <p className="text-lg border bg-blue-400 rounded-md border-blue-300 text-center font-semibold">Fee: ${teacherInfo.fees}/hour</p>
-     
+     <div className='flex justify-between'>
+    <p className="text-lg  text-center font-semibold">Lesson </p>
+    <p className="text-lg  rounded-md  text-center font-semibold">${teacherInfo.fees}/hour</p>
+    </div>
 
 
     <div className="container mx-auto pt-2">
@@ -376,7 +378,7 @@ const calculateTotalAppointments = () => {
         onClick={() => setIsCalendarOpen(!isCalendarOpen)}
         className="bg-sky-400 text-black font-semibold py-2 px-4 w-full rounded-lg mb-6 hover:bg-blue-700 hover:text-white transition duration-300"
       >
-        {isCalendarOpen ? 'Close Calendar' : 'Show Calendar'}
+        {isCalendarOpen ? 'Close lesson' : 'Book lesson'}
       </button>
 
 
