@@ -41,11 +41,6 @@ export default function Login() {
         } else if (formData.password.length < 6) {
             newErrors.password = 'Password must be at least 6 characters';
         }
-        if(state === 'Sign Up' && !formData.confirmPassword) {
-            newErrors.confirmPassword = 'Confirm Password is required';
-        } else if (formData.password !== formData.confirmPassword) {
-            newErrors.confirmPassword = 'Passwords do not match';
-        }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -100,7 +95,7 @@ export default function Login() {
 
     const toggleState = () => {
         setState(prev => prev === 'Sign Up' ? 'Login' : 'Sign Up');
-        setFormData({ name: '', email: '', phone: '' ,password: '', confirmPassword: '' });
+        setFormData({ name: '', email: '', phone: '' ,password: '' });
         setErrors({});
         setApiError('');
     };
@@ -120,28 +115,32 @@ export default function Login() {
                 )}
 
                 {state === 'Sign Up' && (
-                    <div className='w-full pt-1 relative mx-auto z-0 mb-5 group'>
-                        <p className='font-semibold'>{t('fullname')}</p>
-                        <input  name="name" placeholder=" "  className='block py-2.5 px-0 w-full sm:w-96 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-sky-500 focus:outline-none focus:ring-0 focus:border-sky-600 peer' type="text" onChange={handleInputChange} value={formData.name}/>
+                    <div className='w-full'>
+                        <p>{t('fullname')}</p>
+                        <input 
+                            name="name"
+                            className='block py-2.5 px-0 w-full sm:w-96 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-sky-500 focus:outline-none focus:ring-0 focus:border-sky-600 peer'
+                            type="text"
+                            onChange={handleInputChange}
+                            value={formData.name}
+                        />
                         {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                         
-                    <div className='pt-3'>
-                    <p className='font-semibold'>{t('phone')}</p>
+                    <p>{t('phone')}</p>
                     <input 
                         name="phone"
-                        className='block py-2.5  px-0 w-full sm:w-96 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-sky-500 focus:outline-none focus:ring-0 focus:border-sky-600 peer '
+                        className='block py-2.5 px-0 w-full sm:w-96 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-sky-500 focus:outline-none focus:ring-0 focus:border-sky-600 peer'
                         type="text"
                         onChange={handleInputChange}
                         value={formData.phone}
                     />
                     {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
-                    </div>
                 </div>
 
                 )}
 
-                <div className='w-full pt-1'>
-                    <p className='font-semibold'>{t('email')}</p>
+                <div className='w-full'>
+                    <p>{t('email')}</p>
                     <input 
                         name="email"
                         className='block py-2.5 px-0 w-full sm:w-96 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-sky-500 focus:outline-none focus:ring-0 focus:border-sky-600 peer'
@@ -152,8 +151,8 @@ export default function Login() {
                     {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                 </div>
 
-                <div className='w-full pt-1'>
-                    <p className='font-semibold'>{t('password')}</p>
+                <div className='w-full'>
+                    <p>{t('password')}</p>
                     <input 
                         name="password"
                         className='block py-2.5 px-0 w-full sm:w-96 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-sky-500 focus:outline-none focus:ring-0 focus:border-sky-600 peer'
@@ -163,7 +162,8 @@ export default function Login() {
                     />
                     {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                 </div>
-                
+
+                 
                 {state === 'Sign Up' && (
                     <div className='w-full pt-1'>
                         <p className='font-semibold'>{t('confirmPassword')}</p>
@@ -177,7 +177,6 @@ export default function Login() {
                         {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
                     </div>
                 )}
-             
 
                 <button 
                     className={`bg-primary text-white w-full py-2 rounded-md text-base 
@@ -207,7 +206,7 @@ export default function Login() {
                 </p>
                 <p>Forget Password ? <button onClick={()=> navigate('/reset')} className='text-primary underline cursor-pointer ml-1 hover:text-primary/80'>Click here</button></p>
                 <a target='_blank' href='https://student-test-2-s83v.vercel.app'>
-              <li className='py-1 text-primary underline cursor-pointer ml-1 hover:text-primary/80'>Teacher Login</li>
+                <li className='py-1 text-primary underline cursor-pointer ml-1 hover:text-primary/80'>Teacher Login</li>
                 </a>
             </div>
         </form>
